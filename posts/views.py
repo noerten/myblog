@@ -1,21 +1,22 @@
 from django.contrib import messages
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
+
 from .models import Post
 from .forms import PostForm
 
 
 def post_create(request):
-    form = PostForm(request.POST or None)  # None - not to show 'required' stuff on htmlpage
+    form = PostForm(request.POST or None, request.FILES or None)  # None - not to show 'required' stuff on htmlpage
     if form.is_valid():
         instance = form.save(commit=False)
         instance.save()
         messages.success(request, 'Successfully Created')
         return HttpResponseRedirect(instance.get_abs_url())
-    else:
-        messages.error(request, 'Error')
 
     context = {
+
         'form': form,
     }
     return render(request, "posts/post_form.html", context)
@@ -30,16 +31,27 @@ def post_detail(request, id):
 
 
 def post_list(request):
-    queryset = Post.objects.all()
+    queryset_list = Post.objects.all().order_by('-id')
+    paginator = Paginator(queryset_list, 5)
+    page = request.GET.get('page')
+    try:
+        queryset = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        queryset = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        queryset = paginator.page(paginator.num_pages)
+
     context = {
         "object_list": queryset
     }
-    return render(request, "posts/index.html", context)
+    return render(request, "posts/post_list.html", context)
 
 
 def post_update(request, id=None):
     instance = get_object_or_404(Post, id=id)
-    form = PostForm(request.POST or None, instance=instance)
+    form = PostForm(request.POST or None, request.FILES or None, instance=instance)
     if form.is_valid():
         instance = form.save(commit=False)
         instance.save()

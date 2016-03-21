@@ -1,0 +1,44 @@
+{% extends 'posts/base.html' %}
+
+{% block content %}
+    <div class="col-sm-6 col-sm-offset-3">
+    <p>object list:</p>
+
+<p>{% for o in object_list %}</p>
+
+<div class="row">
+
+  <div class="col-sm-12">
+    <div class="thumbnail">
+        {% if o.image %}
+        <img src="{{ o.image.url }}" class="img/responsive"/>
+        {% endif %}
+        <div class="caption">
+        <h3><a href="{{ o.get_abs_url }}"> {{ o.title }} <small>{{ o.added|timesince }} ago</small></a><br/>
+</h3>
+        <p>{{ o.content|linebreaks|truncatechars:140}}</p>
+        <p><a href="{{ o.get_abs_url }}" class="btn btn-primary" role="button">View</a></p>
+      </div>
+    </div>
+  </div>
+<hr/>
+</div>
+{% endfor %}
+<div class="pagination">
+    <span class="step-links">
+        {% if object_list.has_previous %}
+            <a href="?page={{ object_list.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}.
+        </span>
+
+        {% if object_list.has_next %}
+            <a href="?page={{ object_list.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+
+</div>
+{% endblock content %}
