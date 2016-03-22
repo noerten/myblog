@@ -6,6 +6,7 @@
         <img src="{{ instance.image.url }}" class="img/responsive"/>
         {% endif %}
     <h1>{{ instance.title }} <small>{{ instance.added }}</small></h1><br/>
-    {{ instance.content|linebreaks }}<br/>
+    <p>Author: {{ instance.user }}</p>
+        {{ instance.content|linebreaks }}<br/>
     </div>
 {% endblock content %}

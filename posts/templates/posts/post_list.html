@@ -16,6 +16,7 @@
         <div class="caption">
         <h3><a href="{{ o.get_abs_url }}"> {{ o.title }} <small>{{ o.added|timesince }} ago</small></a><br/>
 </h3>
+        <p>by {{ o.user }}</p>
         <p>{{ o.content|linebreaks|truncatechars:140}}</p>
         <p><a href="{{ o.get_abs_url }}" class="btn btn-primary" role="button">View</a></p>
       </div>

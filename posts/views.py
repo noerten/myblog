@@ -10,10 +10,13 @@ from .forms import PostForm
 def post_create(request):
     if not request.user.is_staff or not request.user.is_superuser:
         raise Http404
+    # if not request.user.is_authenticated():
+    #     raise Http404
     form = PostForm(request.POST or None, request.FILES or None)  # None - not to show 'required' stuff on htmlpage
     if form.is_valid():
         instance = form.save(commit=False)
         instance.save()
+        instance.user = request.user
         messages.success(request, 'Successfully Created')
         return HttpResponseRedirect(instance.get_abs_url())
 
