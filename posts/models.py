@@ -2,8 +2,17 @@ from django.db import models
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.db.models.signals import pre_save  # right before model to save, gonna do smthng
+from django.utils import timezone
 from django.utils.text import slugify
 import unidecode
+
+
+class PostManager(models.Manager):
+    def active(self, *args, **kwargs):
+        # we took original class and it's function 'all'
+        # and created new function
+        # and overwrited it with our filter
+        return super(PostManager, self).filter(draft=False).filter(publish__gte=timezone.now())
 
 
 def upload_location(instance, filename):
@@ -27,7 +36,8 @@ class Post(models.Model):
     #fo publish in console 1->timezone.now()
     added = models.DateTimeField(auto_now=False, auto_now_add=True)
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)
-
+    #we linked created modelmanager, objects are convinient name
+    objects = PostManager()
     def __str__(self):
         return self.title
 
