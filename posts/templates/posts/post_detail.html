@@ -5,7 +5,8 @@
         {% if instance.image %}
         <img src="{{ instance.image.url }}" class="img/responsive"/>
         {% endif %}
-    <h1>{{ instance.title }} <small>{{ instance.added }}</small></h1><br/>
+{#    <h1>{{ instance.title }} <small>{{ instance.added }}</small></h1><br/>#}
+    <h1>{{ instance.title }} <small>{% if instance.draft %}<span style="color:red;">Draft </span>{% endif %}{{ instance.publish }}</small></h1><br/>
     <p>Author: {{ instance.user }}</p>
         {{ instance.content|linebreaks }}<br/>
     </div>
