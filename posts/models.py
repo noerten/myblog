@@ -2,6 +2,7 @@ from django.db import models
 from django.core.urlresolvers import reverse
 from django.db.models.signals import pre_save  # right before model to save, gonna do smthng
 from django.utils.text import slugify
+import unidecode
 
 
 def upload_location(instance, filename):
@@ -32,7 +33,14 @@ class Post(models.Model):
 
 
 def create_slug(instance, new_slug=None):
-    slug = slugify(instance.title)
+    try:
+        x=(instance.title.encode('ascii'))
+    except UnicodeEncodeError:
+        x=unidecode.unidecode(instance.title)
+    else:
+        x= instance.title
+
+    slug = slugify(x)
     if new_slug is not None:
         slug = new_slug
     qs = Post.objects.filter(slug=slug).order_by('-id')
