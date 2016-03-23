@@ -16,7 +16,7 @@ class PostManager(models.Manager):
 
 
 def upload_location(instance, filename):
-    return '%s/%s' % (instance.id, filename)
+    return '%s/%s' % (instance.user, filename)
 
 
 class Post(models.Model):
