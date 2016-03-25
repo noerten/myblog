@@ -14,6 +14,7 @@ def post_create(request):
         raise Http404
     # if not request.user.is_authenticated():
     #     raise Http404
+
     form = PostForm(request.POST or None, request.FILES or None)  # None - not to show 'required' stuff on htmlpage
     if form.is_valid():
         instance = form.save(commit=False)
@@ -41,18 +42,17 @@ def post_detail(request, slug=None):
 
 def post_list(request):
     today = timezone.now().date()
-    queryset_list = Post.objects.active()  # function defined in model
-    if request.user.is_staff or request.user.is_superuser:
-        queryset_list = Post.objects.all().order_by('-id')
-    query=request.GET.get('q')
-    if query:
-        queryset_list=queryset_list.filter(
-            Q(title__icontains=query) |
-            Q(content__icontains=query) |
-            Q(user__first_name__icontains=query) |
-            Q(user__last_name__icontains=query)
-            ).distinct() #no duplicates
-    paginator = Paginator(queryset_list, 2)
+
+    queryset_list = list_and_search(request)
+    # query=request.GET.get('q')
+    # if query:
+    #     queryset_list=queryset_list.filter(
+    #         Q(title__icontains=query) |
+    #         Q(content__icontains=query) |
+    #         Q(user__first_name__icontains=query) |
+    #         Q(user__last_name__icontains=query)
+    #         ).distinct() #no duplicates
+    paginator = Paginator(queryset_list, 5)
     page = request.GET.get('page')
     try:
         queryset = paginator.page(page)
@@ -95,3 +95,19 @@ def post_delete(request, slug=None):
     instance.delete()
     messages.success(request, 'Successfully Deleted')
     return redirect('posts:list')
+
+def list_and_search(request):
+    queryset_list = Post.objects.active()  # function defined in model
+    if request.user.is_staff or request.user.is_superuser:
+        queryset_list = Post.objects.all().order_by('-id')
+    query=request.GET.get('q')
+    if query:
+        new_queryset_list=queryset_list.filter(
+            Q(title__icontains=query) |
+            Q(content__icontains=query) |
+            Q(user__first_name__icontains=query) |
+            Q(user__last_name__icontains=query)
+            ).distinct() #no duplicates
+    else:
+        new_queryset_list=queryset_list
+    return new_queryset_list

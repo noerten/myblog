@@ -1,37 +1,31 @@
 {% extends 'posts/base.html' %}
-
 {% block content %}
-    <div class="col-sm-6 col-sm-offset-3">
-    <p>object list:</p>
-<form method="GET" action="">
-<input type='text' name="q" placeholder="Search posts" value="{{request.GET.q}}"/>
-    <!--value="{{request.GET.q}} savesquery in form afrre refreshing the page-->
-    <input type="submit" value="Search"/>
-</form>
-<p>{% for o in object_list %}</p>
 
-<div class="row">
-
-  <div class="col-sm-12">
-    <div class="thumbnail">
-        {% if o.image %}
-        <img src='{{ o.image.url }}' class="img/responsive"/>
-        {% endif %}
+<div class="col col-sm-9">
+    <div class="panel">
+    <h1>Posts</h1>
+    <p>{% for o in object_list %}</p>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="thumbnail">
+            {% if o.image %}
+            <img src='{{ o.image.url }}' class="img/responsive"/>
+            {% endif %}
         <div class="caption">
-{#        <h3><a href="{{ o.get_abs_url }}"> {{ o.title }} <small>{{ o.added|timesince }} ago</small></a><br/>#}
-{#</h3>#}
-        {% if o.draft %}<h3>Draft</h3>{% endif %}{% if o.publish > today %}<h3>Future Post</h3>{% endif %}
-        <h3><a href="{{ o.get_abs_url }}"> {{ o.title }} <small>{{ o.publish }}</small></a><br/>
-</h3>
-        <p>by {{ o.user }}</p>
-        <p>{{ o.content|linebreaks|truncatechars:140}}</p>
-        <p><a href="{{ o.get_abs_url }}" class="btn btn-primary" role="button">View</a></p>
+            <h3><a href="{{ o.get_abs_url }}"> {{ o.title }} <small>{{ o.added|timesince }} ago</small></a><br/></h3>
+            {% if o.draft %}<h3>Draft</h3>{% endif %}{% if o.publish > today %}<h3>Future Post</h3>{% endif %}
+            <h3><a href="{{ o.get_abs_url }}"> {{ o.title }} <small>{{ o.publish }}</small></a><br/></h3>
+            <p>by {{ o.user }}</p>
+            <p>{{ o.content|linebreaks|truncatechars:140}}</p>
+            <p><a href="{{ o.get_abs_url }}" class="btn btn-default" role="button">More</a></p>
+        </div>
+        </div>
       </div>
     </div>
-  </div>
 <hr/>
-</div>
-{% endfor %}
+    {% endfor %}
+    </div>
+
 <div class="pagination">
     <span class="step-links">
         {% if object_list.has_previous %}
@@ -50,3 +44,34 @@
 
 </div>
 {% endblock content %}
+    <!--<div class="col-sm-6 col-sm-offset-3">-->
+    <!--<p><h3>Posts</h3></p>-->
+<!--&lt;!&ndash;<form method="GET" action="">&ndash;&gt;-->
+<!--&lt;!&ndash;<input type='text' name="q" placeholder="Search posts" value="{{request.GET.q}}"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;&lt;!&ndash;value="{{request.GET.q}} savesquery in form afrre refreshing the page&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;<input type="submit" value="Search"/>&ndash;&gt;-->
+<!--&lt;!&ndash;</form>&ndash;&gt;-->
+<!--<p>{% for o in object_list %}</p>-->
+
+<!--<div class="row">-->
+
+  <!--<div class="col-sm-12">-->
+    <!--<div class="thumbnail">-->
+        <!--{% if o.image %}-->
+        <!--<img src='{{ o.image.url }}' class="img/responsive"/>-->
+        <!--{% endif %}-->
+        <!--<div class="caption">-->
+<!--{#        <h3><a href="{{ o.get_abs_url }}"> {{ o.title }} <small>{{ o.added|timesince }} ago</small></a><br/>#}-->
+<!--{#</h3>#}-->
+        <!--{% if o.draft %}<h3>Draft</h3>{% endif %}{% if o.publish > today %}<h3>Future Post</h3>{% endif %}-->
+        <!--<h3><a href="{{ o.get_abs_url }}"> {{ o.title }} <small>{{ o.publish }}</small></a><br/>-->
+<!--</h3>-->
+        <!--<p>by {{ o.user }}</p>-->
+        <!--<p>{{ o.content|linebreaks|truncatechars:140}}</p>-->
+        <!--<p><a href="{{ o.get_abs_url }}" class="btn btn-primary" role="button">View</a></p>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--<hr/>-->
+<!--</div>-->
+<!--{% endfor %}-->

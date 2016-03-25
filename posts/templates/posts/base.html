@@ -1,34 +1,121 @@
 {% load staticfiles %}
-<!--DOCTYPE html -->
+<!DOCTYPE html>
 <html>
 <head>
-<title>{%  block head_title %}My blog{% endblock head_title %}</title>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
-      integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
-      crossorigin="anonymous">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+          integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r"
+          crossorigin="anonymous">
+    <!--[if lt IE 9]>
+        <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+        <link rel="stylesheet" href='{% static "css/styles.css"%}'/>
+    <title>{%  block head_title %}My blog{% endblock head_title %}</title>
 
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
-      integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r"
-      crossorigin="anonymous">
-
-    <link rel="stylesheet" href='{% static "css/base.css"%}'/>
-
-<style>
-    {% block style %}{% endblock style %}
-    </style>
+    <style>
+        {% block style %}{% endblock style %}
+        </style>
 </head>
 <body>
+
+<nav class="navbar navbar-static">
+    <div class="container">
+      <a class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="glyphicon glyphicon-chevron-down"></span>
+      </a>
+      <div class="nav-collapse collase">
+        <ul class="nav navbar-nav">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Projects</a></li>
+          <li><a href="#">About me</a></li>
+        </ul>
+        <ul class="nav navbar-right navbar-nav">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-search"></i></a>
+            <ul class="dropdown-menu" style="padding:12px;">
+                <form class="form-inline" method="GET" action="">
+                   <div class="input-group">
+                     <input type="text" class="form-control" placeholder="Search" name="q" value="{{request.GET.q}}">
+                           <!--value="{{request.GET.q}} savesquery in form afrre refreshing the page-->
+                     <div class="input-group-btn">
+                         <!--??????????????????-->
+                       <!--<input type="submit" value="Search"/>-->
+     			       <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+                     </div>
+                  </div>
+                </form>
+              </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> <i class="glyphicon glyphicon-chevron-down"></i></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Login</a></li>
+              <li><a href="#">Profile</a></li>
+              <li class="divider"></li>
+              <li><a href="#">About</a></li>
+             </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+</nav>
 {% include 'posts/messages_display.html' %}
+<!--left navigation bar-->
+<div class="container">
+	<div class="row">
+  			<div class="col col-sm-3">
+              	<div id="sidebar">
+      			<ul class="nav nav-stacked">
+                    <li><h3 class="highlight">Channels <i class="glyphicon glyphicon-dashboard pull-right"></i></h3></li>
+                  	<li><a href="#">Link</a></li>
+          			<li><a href="#">Link</a></li>
+				</ul>
+                <div class="accordion" id="accordion2">
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                                Accordion
+                            </a>
+                        </div>
+                        <div id="collapseOne" class="accordion-body collapse in">
+                            <div class="accordion-inner">
+                              <p>There is a lot to be said about RWD.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-group">
+                            <div class="accordion-heading">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+                                    Accordion
+                                </a>
+                            </div>
+                            <div id="collapseTwo" class="accordion-body collapse">
+                                <div class="accordion-inner">
+                                  <p><h1>Use @my classes to customize responsiveness.</h1></p>
+                                </div>
+                            </div>
+                        </div>
+               	</div>
+               </div>
+      		</div>
+
 <div class="container">
 {% block content %}{% endblock content %}
 </div>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+	<!-- script references -->
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
         integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
         crossorigin="anonymous"></script>
+        <script src="{% static 'js/scripts.js' %}"></script>
+
 
 </body>
 </html>
-
-<!-- Latest compiled and minified JavaScript -->
