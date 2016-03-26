@@ -17,15 +17,15 @@
         {% if o.image %}
         <img src='{{ o.image.url }}' class="img/responsive"/>
         {% endif %}
-        <div class="caption">
+        <div class="caption post-detail-item">
 {#        <h3><a href="{{ o.get_abs_url }}"> {{ o.title }} <small>{{ o.added|timesince }} ago</small></a><br/>#}
 {#</h3>#}
-        {% if o.draft %}<h3>Draft</h3>{% endif %}{% if o.publish > today %}<h3>Future Post</h3>{% endif %}
-        <h3><a href="{{ o.get_abs_url }}"> {{ o.title }} <small>{{ o.publish }}</small></a><br/>
-</h3>
-        <p>by {{ o.user }}</p>
-        <p class="content-markdown">{{ o.content|truncatechars:340}}</p>
-        <p><a href="{{ o.get_abs_url }}" class="btn btn-primary" role="button">View</a></p>
+            {% if o.draft %}<h3>Draft</h3>{% endif %}{% if o.publish > today %}<h3>Future Post</h3>{% endif %}
+            <h3><a href="{{ o.get_abs_url }}"> {{ o.title }} <small>{{ o.publish }}</small></a><br/>
+    </h3>
+            <p>by {{ o.user }}</p>
+            {{ o.get_markdown }}
+            <p><a href="{{ o.get_abs_url }}" class="btn btn-primary" role="button">View</a></p>
       </div>
     </div>
   </div>

@@ -3,9 +3,10 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.db.models.signals import pre_save  # right before model to save, gonna do smthng
 from django.utils import timezone
+from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 import unidecode
-
+from markdown_deux import markdown
 
 class PostManager(models.Manager):
     def active(self, *args, **kwargs):
@@ -38,6 +39,7 @@ class Post(models.Model):
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)
     #we linked created modelmanager, objects are convinient name
     objects = PostManager()
+
     def __str__(self):
         return self.title
 
@@ -46,6 +48,9 @@ class Post(models.Model):
     # class Meta:
     #     ordering = ['-added', '-updated']
 
+    def get_markdown(self):
+        content = self.content
+        return mark_safe(markdown(content))
 
 def create_slug(instance, new_slug=None):
     try:

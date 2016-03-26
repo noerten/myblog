@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'posts',
     #3d party
+    'markdown_deux',
     'pagedown',
+
 ]
 
 MIDDLEWARE_CLASSES = [
