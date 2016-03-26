@@ -24,7 +24,7 @@
             <h3><a href="{{ o.get_abs_url }}"> {{ o.title }} <small>{{ o.publish }}</small></a><br/>
     </h3>
             <p>by {{ o.user }}</p>
-            {{ o.get_markdown }}
+            {{ o.get_markdown|truncatechars_html:340 }}
             <p><a href="{{ o.get_abs_url }}" class="btn btn-primary" role="button">View</a></p>
       </div>
     </div>
