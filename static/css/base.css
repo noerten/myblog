@@ -1,3 +1,10 @@
 h1 {
 color: #8911b3;
 }
+
+.wmd-panel{
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+    width: 100% !important;
+    min-width: 100px !important;
+}
