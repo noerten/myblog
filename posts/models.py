@@ -50,7 +50,8 @@ class Post(models.Model):
 
     def get_markdown(self):
         content = self.content
-        return mark_safe(markdown(content))
+        markdown_text = markdown(content)
+        return mark_safe(markdown_text)
 
 def create_slug(instance, new_slug=None):
     try:
