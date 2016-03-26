@@ -7,6 +7,8 @@ from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 import unidecode
 from markdown_deux import markdown
+from comments.models import Comment
+
 
 class PostManager(models.Manager):
     def active(self, *args, **kwargs):
@@ -52,6 +54,12 @@ class Post(models.Model):
         content = self.content
         markdown_text = markdown(content)
         return mark_safe(markdown_text)
+
+    @property
+    def comments(self):
+        instance = self
+        qs = Comment.objects.filter_by_instance(instance)
+        return qs
 
 def create_slug(instance, new_slug=None):
     try:

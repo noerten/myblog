@@ -18,12 +18,13 @@
         <br/>
     <div>
         <p class="lead">Comments</p>
+        <hr/>
         {% for comment in comments %}
-        <div class="">
-            {{ comment.content }}
-            <br/>
-            <small>by {{ comment.user }} on {{comment.added}}</small>
-        </div>
+        <blockquote>
+          <p>{{ comment.content }}</p>
+          <footer>by {{ comment.user }} on {{comment.added}}</footer>
+        </blockquote>
+        <hr/>
         {% endfor %}
     </div>
 </div>
