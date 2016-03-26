@@ -1,6 +1,7 @@
-from django.db import models
-from django.core.urlresolvers import reverse
 from django.conf import settings
+from django.contrib.contenttypes.models import ContentType
+from django.core.urlresolvers import reverse
+from django.db import models
 from django.db.models.signals import pre_save  # right before model to save, gonna do smthng
 from django.utils import timezone
 from django.utils.safestring import mark_safe
@@ -60,6 +61,12 @@ class Post(models.Model):
         instance = self
         qs = Comment.objects.filter_by_instance(instance)
         return qs
+
+    @property
+    def get_content_type(self):
+        instance = self
+        content_type = ContentType.objects.get_for_model(instance.__class__)
+        return content_type
 
 def create_slug(instance, new_slug=None):
     try:
