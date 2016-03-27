@@ -16,7 +16,7 @@ class PostManager(models.Manager):
         # we took original class and it's function 'all'
         # and created new function
         # and overwrited it with our filter
-        return super(PostManager, self).filter(draft=False).filter(publish__gte=timezone.now())
+        return super(PostManager, self).filter(draft=False).filter(publish__lte=timezone.now())
 
 
 def upload_location(instance, filename):
