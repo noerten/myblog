@@ -8,3 +8,7 @@ color: #8911b3;
     width: 100% !important;
     min-width: 100px !important;
 }
+
+.comment-reply{
+     'display: none'
+}

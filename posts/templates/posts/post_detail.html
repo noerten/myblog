@@ -27,20 +27,23 @@
         {% for comment in comments %}
         <blockquote>
           <p>{{ comment.content }}</p>
-          <footer>by {{ comment.user }} on {{comment.added}}</footer>
-            {% for child_comment in comment.children %}
-            <blockquote>
-                <p>{{ child_comment.content }}</p>
-                <footer>by {{ child_comment.user }} on {{child_comment.added}}</footer>
-            </blockquote>
-            {% endfor %}
-            
-            <form method="post" action="."> {% csrf_token %}
-                {{ comment_form|crispy }}
-                <input type="hidden" name="parent_id" value="{{ comment.id }}">
-                <input type="submit" value="Reply" class="btn btn-default">
-            </form>
+          <footer>by {{ comment.user }} on {{comment.added}}| {%if comment.children.count > 0 %} {{comment.children.count }} Comments | {% endif %} <a class="comment-reply-btn" href="#">Reply</a> </footer>
 
+              <div class="comment-reply">
+
+                {% for child_comment in comment.children %}
+                <blockquote>
+                    <p>{{ child_comment.content }}</p>
+                    <footer>by {{ child_comment.user }} on {{child_comment.added}}</footer>
+                </blockquote>
+                {% endfor %}
+
+                <form method="post" action="."> {% csrf_token %}
+                    {{ comment_form|crispy }}
+                    <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                    <input type="submit" value="Reply" class="btn btn-default">
+                </form>
+              </div>
 
 
 
