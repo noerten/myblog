@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.admin.views.decorators import staff_member_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.http import HttpResponseRedirect, Http404
@@ -10,10 +11,10 @@ from comments.models import Comment
 from .forms import PostForm
 from .models import Post
 
-
+@staff_member_required
 def post_create(request):
-    if not request.user.is_staff or not request.user.is_superuser:
-        raise Http404
+    #if not request.user.is_staff or not request.user.is_superuser:
+    #    raise Http404
     # if not request.user.is_authenticated():
     #     raise Http404
     form = PostForm(request.POST or None, request.FILES or None)  # None - not to show 'required' stuff on htmlpage
